@@ -147,8 +147,7 @@ const useAppLink = () => {
    * (1) A helium deeplink URL
    * (2) address string
    * (3) stringified JSON object { type, address, amount?, memo? }
-   * (4) stringified JSON object { type, payees: {[payeeAddress]: amount} }
-   * (5) stringified JSON object { type, payees: {[payeeAddress]: { amount, memo? }} }
+   * (4) stringified JSON object { type, payees: {[payeeAddress]: { amount, memo? }} }
    */
   const parseBarCodeData = useCallback(
     (data: string, scanType: AppLinkCategoryType): AppLink | AppLinkPayment => {
@@ -212,26 +211,11 @@ const useAppLink = () => {
             scanResult = {
               type,
               payees: Object.entries(rawScanResult.payees).map((entries) => {
-                let amount
-                let memo
-                if (entries[1]) {
-                  if (typeof entries[1] === 'number') {
-                    // Case (4) stringified JSON object { type, payees: {[payeeAddress]: amount} }
-                    amount = entries[1] as number
-                  } else if (typeof entries[1] === 'object') {
-                    // Case (5) stringified JSON object { type, payees: {[payeeAddress]: { amount, memo? }} }
-                    const scanData = entries[1] as {
-                      amount: string
-                      memo?: string
-                    }
-                    amount = scanData.amount
-                    memo = scanData.memo
-                  }
-                }
+                const scanData = entries[1] as { amount: string; memo?: string }
                 return {
                   address: entries[0],
-                  amount: `${amount}`,
-                  memo,
+                  amount: scanData.amount,
+                  memo: scanData.memo,
                 } as Payee
               }),
             }

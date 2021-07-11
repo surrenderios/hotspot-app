@@ -61,12 +61,12 @@ static void InitializeFlipper(UIApplication *application) {
   return YES;
 }
 
-- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
-{
-    NSArray<id<RCTBridgeModule>> *extraModules = [_moduleRegistryAdapter extraModulesForBridge:bridge];
-    // If you'd like to export some custom RCTBridgeModules that are not Expo modules, add them here!
-    return extraModules;
-}
+ - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
+ {
+     NSArray<id<RCTBridgeModule>> *extraModules = [_moduleRegistryAdapter extraModulesForBridge:bridge];
+     // If you'd like to export some custom RCTBridgeModules that are not Expo modules, add them here!
+     return extraModules;
+ }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
